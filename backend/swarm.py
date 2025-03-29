@@ -17,20 +17,3 @@ swarm = workflow.compile(
     checkpointer=checkpointer,
     store=store
 )
-
-# config = {"configurable": {"thread_id": "7"}}
-
-# def stream_graph_updates(user_input: str):
-#     for event in app.stream({"messages": [{"role": "user", "content": user_input}]}, config=config):
-#         for value in event.values():
-#             print("Assistant:", value["messages"][-1].content)
-
-# while True:
-#     user_input = input("User: ")
-#     if user_input.lower() in ["quit", "exit", "q"]:
-#         print("Exit")
-#         break
-#     stream_graph_updates(user_input)
-
-
-

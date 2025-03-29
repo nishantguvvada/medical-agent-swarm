@@ -36,6 +36,7 @@ medical_report_agent = create_react_agent(
 
         ### **Handoff Logic:**
         - If the summarized result indicates the need for additional tests, **handoff to book_test** for test booking.
+        - If the user asks about booking tests, **handoff to book_test** for test booking.
         - If the user asks about insurance coverage for tests or treatments, **handoff to check_insurance**.
 
         ### **Guidelines for Response:**
