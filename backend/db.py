@@ -20,11 +20,19 @@ def get_user_details(user_name: str):
 
     return user_details
 
-def get_insurance_policy_details(user_id):
+def get_insurance_policy_details_from_user_id(user_id):
 
     insurance_collection = db[os.getenv('INSURANCE_COLLECTION')]
 
     policy = insurance_collection.find_one({"patient_id": user_id})
+
+    return policy
+
+def get_insurance_policy_details_from_policy(policy_number):
+
+    insurance_collection = db[os.getenv('INSURANCE_COLLECTION')]
+
+    policy = insurance_collection.find_one({"policy_number": policy_number})
 
     return policy
 
@@ -64,4 +72,24 @@ def get_available_tests():
 
     return test_details
 
+async def get_thread_from_db(thread_id):
+    """Retrieve thread from MongoDB"""
 
+    thread_collection = db[os.getenv('THREAD_COLLECTION')]
+
+    thread = await thread_collection.find_one({"thread_id": thread_id})
+
+    return thread["context"] if thread else None
+
+def save_thread_to_db(thread_id, context):
+    """Save thread to MongoDB"""
+
+    thread_collection = db[os.getenv('THREAD_COLLECTION')]
+
+    response = thread_collection.update_one(
+        {"thread_id": thread_id}, 
+        {"$set": {"context": context["messages"], "usage": context["usage"], "metadata": context["metadata"]}}, 
+        upsert=True
+    )
+
+    return response
